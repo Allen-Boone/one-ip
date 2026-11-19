@@ -3064,6 +3064,10 @@ function featureTile(href, iconHtml, label, color){
   return '<a class="feature-tile" href="' + href + '"><span class="feature-icon"' + style + '>' + iconHtml + '</span><span class="feature-label">' + esc(label) + '</span></a>';
 }
 
+function promoLink(href, iconHtml, label, desc){
+  return '<a href="' + href + '" target="_blank" rel="noopener"><span class="shortcut-icon">' + iconHtml + '</span><span class="shortcut-label"><strong>' + esc(label) + '</strong><span class="shortcut-description">' + esc(desc) + '</span></span><span class="shortcut-arrow">→</span></a>';
+}
+
 function viewOverview(app, token){
   app.innerHTML =
     '<div class="page-head"><h1>网络概览</h1><button class="btn ghost" id="refreshBtn">重新检测</button></div>' +
@@ -3094,6 +3098,13 @@ function viewOverview(app, token){
         featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a3 3 0 0 1 3 3c0 2 0 3-1 5"/><path d="M6.5 13a5.5 5.5 0 0 1 11 0c0 1.5-.3 3-1 4.5"/><path d="M3.5 16a8.5 8.5 0 0 1 17 0c0 2.5-.8 4.5-2 6"/></svg>', '浏览器指纹', '#34d399') +
         featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>', '环境一致性', '#a78bfa') +
         featureTile('#/status', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>', '服务状态', '#34d399') +
+      '</div></div>' +
+    '<div class="card"><h3>站长推荐</h3>' +
+      '<div class="shortcut-grid">' +
+        promoLink('https://t.me/eziyuan_1', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>', 'TG 频道', '@eziyuan_1') +
+        promoLink('https://blog.t20.de5.net/', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>', '自由论坛', 'blog.t20.de5.net') +
+        promoLink('https://t.me/jdxxtby_bot', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>', '订阅查询机器人', '@jdxxtby_bot') +
+        promoLink('https://t.me/bibipobibibi_bot', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>', '私聊 / 投稿 / 广告合作', '@bibipobibibi_bot') +
       '</div></div>';
   document.getElementById('refreshBtn').addEventListener('click', function(){ render(); });
   var lookupInput = document.getElementById('lookupInput');
