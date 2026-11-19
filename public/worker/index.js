@@ -2419,9 +2419,9 @@ pre{background:#f8f9fb;border:1px solid var(--border);border-radius:10px;padding
 .feature-icon svg{width:24px;height:24px}
 .feature-label{font-size:13px;line-height:1.3}
 .feature-sub{display:block;font-size:12px;color:var(--muted);margin-top:2px}
-.promo-grid{grid-template-columns:repeat(4,1fr)}
+.promo-grid{grid-template-columns:repeat(4,minmax(0,140px));justify-content:center}
 .kbd-hint{margin-left:auto;font:11px/1 inherit;padding:5px 8px;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;color:var(--muted);background:var(--surface2)}
-@media (max-width:900px){.feature-grid{grid-template-columns:repeat(4,1fr)}.promo-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){.feature-grid{grid-template-columns:repeat(4,1fr)}.promo-grid{grid-template-columns:repeat(2,minmax(0,140px))}}
 
 .shortcut-description{display:block;font-size:12px;color:var(--muted)}
 .shortcut-arrow{color:var(--muted);flex:none}
