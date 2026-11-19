@@ -2270,94 +2270,189 @@ const PAGE_HTML = `<!DOCTYPE html>
 <title>IP 网络工具箱</title>
 <style>
 :root{
-  --bg:#0b0f16; --surface:#111827; --surface2:#161e2e; --border:#1f2a3d;
-  --text:#e6edf3; --muted:#8b98a9; --accent:#38bdf8; --accent2:#22d3ee;
-  --green:#34d399; --yellow:#fbbf24; --red:#f87171; --gray:#6b7280;
+  --bg:#fafafa; --surface:#ffffff; --surface2:#f8f9fb; --border:#e1e4e8;
+  --text:#1a1a1a; --muted:#57606a; --accent:#2563eb; --accent2:#1d4ed8;
+  --green:#1b8a2d; --green-soft:#d1fae5; --green-text:#065f46;
+  --yellow:#b45309; --yellow-soft:#fef3c7; --red:#cf222e; --red-soft:#fee2e2;
+  --blue-soft:#dbeafe; --blue-text:#1d4ed8; --gray:#6b7280;
+  --shadow:0 1px 4px rgb(0 0 0 / 6%), 0 4px 12px rgb(0 0 0 / 4%);
+}
+.dark{
+  --bg:#0d1117; --surface:#161b22; --surface2:#21262d; --border:#30363d;
+  --text:#e6edf3; --muted:#c9d1d9; --accent:#3b82f6; --accent2:#93c5fd;
+  --green:#4ade80; --green-soft:#123e31; --green-text:#a7f3d0;
+  --yellow:#fbbf24; --yellow-soft:#3f2f04; --red:#f87171; --red-soft:#3f1d1d;
+  --blue-soft:#162d4e; --blue-text:#93c5fd; --gray:#8b949e;
+  --shadow:0 1px 4px rgb(0 0 0 / 40%), 0 4px 12px rgb(0 0 0 / 30%);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.6}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-header{position:sticky;top:0;z-index:10;background:rgba(11,15,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-.nav{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.logo{font-size:19px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
-.logo span{color:var(--accent)}
-.tabs{display:flex;gap:4px;flex-wrap:wrap}
-.tabs a{color:var(--muted);padding:7px 13px;border-radius:9px;font-size:14px;white-space:nowrap}
+header{border-bottom:1px solid var(--border)}
+.nav{max-width:1000px;margin:0 auto;padding:14px 20px 10px;display:flex;align-items:center;gap:18px}
+.logo{font-size:24px;font-weight:800;letter-spacing:-1px;color:var(--accent);line-height:1;white-space:nowrap}
+.logo:hover{text-decoration:none}
+.tabs{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto}
+.tabs a{color:var(--muted);padding:7px 12px;border-radius:8px;font-size:14px;white-space:nowrap}
 .tabs a:hover{color:var(--text);text-decoration:none;background:var(--surface2)}
-.tabs a.active{color:#06222e;background:var(--accent);font-weight:600}
-main{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
-h1{font-size:22px;margin:4px 0 14px}
+.tabs a.active{color:var(--accent);font-weight:600}
+.icon-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:8px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0}
+.icon-btn:hover{color:var(--text)}
+.icon-btn svg{width:18px;height:18px}
+.mnav{display:none}
+main{max-width:1000px;margin:0 auto;padding:16px 20px 60px}
+h1{font-size:26px;margin:4px 0 12px;line-height:1.3}
 h2{font-size:17px;margin:22px 0 10px}
-h3{font-size:15px;margin:0 0 8px}
+h3{font-size:15px;margin:0 0 10px;font-weight:600}
 p{margin:6px 0}
 .muted{color:var(--muted);font-size:13px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.small{font-size:12px}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.page-head h1{font-size:15px;margin:0;font-weight:600}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
 .grid .card{margin-bottom:0}
-.bigip{font-size:34px;font-weight:700;letter-spacing:1px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all}
+.ip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.bigip{font-size:24px;font-weight:700;letter-spacing:.5px;word-break:break-all;line-height:1.3}
+.bigip a{color:inherit}
+.score-num{font-size:56px;font-weight:800;line-height:1}
+.eyebrow{font-size:12px;letter-spacing:.5px;color:var(--muted);margin-bottom:10px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.row-between h3{margin:0}
 .kv{display:grid;grid-template-columns:110px 1fr;gap:4px 10px;font-size:14px}
 .kv dt{color:var(--muted)}
 .kv dd{margin:0;word-break:break-all}
-.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
-.b-green{background:rgba(52,211,153,.15);color:var(--green)}
-.b-yellow{background:rgba(251,191,36,.15);color:var(--yellow)}
-.b-red{background:rgba(248,113,113,.15);color:var(--red)}
-.b-gray{background:rgba(139,152,165,.15);color:var(--muted)}
-.b-blue{background:rgba(56,189,248,.15);color:var(--accent)}
-.btn{display:inline-block;background:var(--accent);color:#06222e;border:0;border-radius:10px;padding:9px 18px;font-size:14px;font-weight:600;cursor:pointer}
-.btn:hover{filter:brightness(1.1)}
-.btn.ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;margin:2px 4px 2px 0;white-space:nowrap}
+.b-green{background:var(--green-soft);color:var(--green-text)}
+.b-yellow{background:var(--yellow-soft);color:var(--yellow)}
+.b-red{background:var(--red-soft);color:var(--red)}
+.b-gray{background:#eef1f5;color:var(--muted)}
+.dark .b-gray{background:#21262d;color:var(--muted)}
+.b-blue{background:var(--blue-soft);color:var(--blue-text)}
+.b-solid{background:var(--accent);color:#fff}
+.btn{display:inline-block;background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08);text-decoration:none}
+.btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn.ghost:hover{background:var(--surface2)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-input,select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;outline:none}
-input:focus,select:focus{border-color:var(--accent)}
+input,select{width:100%;background:var(--surface);border:1px solid #d8dce0;color:var(--text);border-radius:8px;padding:9px 12px;font-size:14px;outline:none}
+.dark input,.dark select{border-color:var(--border)}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(37,99,235,.2)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .row input{flex:1;min-width:180px}
 .row select{flex:0 0 150px}
 table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--border);vertical-align:top}
-th{color:var(--muted);font-weight:600;white-space:nowrap}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--muted);font-weight:600;white-space:nowrap;font-size:13px}
 td{word-break:break-all}
-.ms{font-family:ui-monospace,Menlo,monospace;font-weight:600}
-.ms.good{color:var(--green)}
-.ms.mid{color:var(--yellow)}
-.ms.slow{color:var(--red)}
-.ms.bad{color:var(--gray)}
+.ms{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-weight:600;font-size:13px;background:var(--green-soft);color:var(--green-text);border-radius:6px;padding:2px 8px;white-space:nowrap}
+.ms.mid{background:var(--yellow-soft);color:var(--yellow)}
+.ms.slow{background:var(--red-soft);color:var(--red)}
+.ms.bad{background:#eef1f5;color:var(--muted)}
+.dark .ms.bad{background:#21262d}
+.ms-orange{font-weight:600;color:#d97706;white-space:nowrap}
+.dark .ms-orange{color:#fbbf24}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
-.dot.g{background:var(--green)}
-.dot.y{background:var(--yellow)}
-.dot.r{background:var(--red)}
-.dot.gr{background:var(--gray)}
-.bar{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+.dot.g{background:#22c55e}
+.dot.y{background:#eab308}
+.dot.r{background:#ef4444}
+.dot.gr{background:#cbd5e1}
+.bar{height:8px;background:#eef1f5;border-radius:99px;overflow:hidden;margin-top:6px}
+.dark .bar{background:#21262d}
 .bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
 .skel{color:var(--muted);padding:18px 0}
-.err{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.35);color:#fca5a5;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:14px}
-.note{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25);color:#a5d8f0;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:13px}
-.icon{width:20px;height:20px;border-radius:5px;vertical-align:-4px;margin-right:8px;background:var(--surface2)}
-.chip{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 11px;margin:2px 4px 2px 0;font-size:12px;color:var(--muted);cursor:pointer}
-.chip.on{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,.1)}
-footer{max-width:1080px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:12px}
-pre{background:#0d1320;border:1px solid var(--border);border-radius:10px;padding:12px;overflow:auto;font-size:12px;max-height:320px}
+.err{background:var(--red-soft);border:1px solid rgba(207,34,46,.3);color:var(--red);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:14px}
+.dark .err{color:#fca5a5}
+.note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;border-radius:10px;padding:10px 14px;margin:10px 0;font-size:13px}
+.dark .note{background:#162d4e;border-color:#1e3a5f;color:#93c5fd}
+.icon{width:20px;height:20px;border-radius:5px;vertical-align:-4px;margin-right:8px}
+.flag{width:22px;height:16px;border-radius:2px;vertical-align:-2px;margin-right:8px;object-fit:cover}
+.chip{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:3px 11px;margin:2px 4px 2px 0;font-size:12px;color:var(--muted);cursor:pointer;background:var(--surface)}
+.chip.on{border-color:var(--accent);color:var(--accent);background:var(--blue-soft)}
+footer{max-width:1000px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:12px}
+pre{background:#f8f9fb;border:1px solid var(--border);border-radius:10px;padding:12px;overflow:auto;font-size:12px;max-height:320px}
+.dark pre{background:#0d1117}
+.ping-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tile{padding:8px 6px}
+.tile-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tile-name{display:flex;align-items:center;min-width:0;font-weight:600;font-size:14px}
+.tile-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dots{display:flex;gap:3px;margin-top:7px}
+.dots i{width:6px;height:6px;border-radius:50%;background:#d1d5db}
+.dots i.g{background:#22c55e}
+.dots i.y{background:#eab308}
+.dots i.r{background:#ef4444}
+.ip-card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.ip-main{min-width:0;flex:1}
+.ip-score{text-align:right;flex:none}
+.ip-score .score-label{font-size:12px;color:var(--muted);margin-top:2px}
+.ip-meta{margin-top:10px;font-size:14px}
+.ip-meta p{margin:2px 0}
+.ip-meta .sub{font-size:12px;color:var(--muted)}
+.ai-row,.svc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.ai-row:last-child,.svc-row:last-child{border-bottom:0}
+.ai-row .nm,.svc-row .nm{display:flex;align-items:center;min-width:0;color:var(--text)}
+.ai-row .nm span,.svc-row .nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-ok{color:var(--green);font-weight:600;white-space:nowrap}
+.st-bad{color:var(--red);font-weight:600;white-space:nowrap}
+.st-warn{color:var(--yellow);font-weight:600;white-space:nowrap}
+.st-unk{color:var(--muted);font-weight:600;white-space:nowrap}
+.egress-row{display:flex;align-items:center;gap:4px;padding:9px 0;border-bottom:1px solid var(--border)}
+.egress-row:last-child{border-bottom:0}
+.shortcut-feature{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;color:var(--text)}
+.shortcut-feature:hover{background:var(--surface2);text-decoration:none}
+.shortcut-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shortcut-grid a{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+.shortcut-grid a:hover{background:var(--surface2);text-decoration:none}
+.shortcut-icon{flex:none;width:36px;height:36px;border-radius:9px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.shortcut-icon img{width:22px;height:22px;border-radius:5px;margin:0}
+.shortcut-icon svg{width:20px;height:20px}
+.shortcut-label{flex:1;min-width:0}
+.shortcut-label strong{display:block;font-size:14px}
+.shortcut-description{display:block;font-size:12px;color:var(--muted)}
+.shortcut-arrow{color:var(--muted);flex:none}
 @media (max-width:640px){
-  .bigip{font-size:26px}
+  .nav{padding:12px 16px 8px;gap:12px}
+  .tabs{display:none}
+  .mnav{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:20;background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);padding:6px;justify-content:space-around}
+  .mnav a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:11px;padding:5px 10px;border-radius:14px}
+  .mnav a svg{width:20px;height:20px}
+  .mnav a.active{color:var(--accent);background:var(--blue-soft);font-weight:600}
+  .mnav a:hover{text-decoration:none}
+  main{padding:14px 14px 100px}
+  .ip-grid,.duo-grid{grid-template-columns:1fr}
+  .ping-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bigip{font-size:22px}
+  .score-num{font-size:44px}
   .kv{grid-template-columns:96px 1fr}
   .row select{flex:1 1 100%}
+  .shortcut-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <header>
   <div class="nav">
-    <div class="logo">IP <span>网络工具箱</span></div>
+    <a class="logo" href="#/">ip</a>
     <nav class="tabs" id="tabs">
       <a href="#/" data-route="">概览</a>
-      <a href="#/ai" data-route="ai">AI 检测</a>
-      <a href="#/status" data-route="status">服务状态</a>
       <a href="#/network" data-route="network">网络检测</a>
       <a href="#/browser" data-route="browser">浏览器检测</a>
+      <a href="#/ai" data-route="ai">AI 检测</a>
+      <a href="#/status" data-route="status">服务状态</a>
     </nav>
+    <button class="icon-btn" id="themeToggle" title="切换深色 / 浅色" aria-label="切换主题"><span id="themeIcon"></span></button>
   </div>
 </header>
+<nav class="mnav" id="mnav">
+  <a href="#/" data-route=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>概览</a>
+  <a href="#/network" data-route="network"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3"/><path d="M15 7V3"/><path d="M7 7h10v4a5 5 0 0 1-10 0V7z"/><path d="M12 16v5"/></svg>网络</a>
+  <a href="#/browser" data-route="browser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18"/><path d="M12 3a13 13 0 0 0 0 18"/></svg>浏览器</a>
+  <a href="#/ai" data-route="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>AI</a>
+  <a href="#/status" data-route="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>状态</a>
+</nav>
 <main id="app"><div class="skel">加载中…</div></main>
 <footer>
   <p>本站为浏览器端 + 边缘节点联合诊断工具：连通性与出口探测在你的浏览器里完成，延迟为浏览器请求耗时中位数，不是 ICMP 延迟；机房出口可能被部分站点限流，个别站点失败不代表站点宕机。IP 归属与信誉仅供参考。</p>
@@ -2545,13 +2640,15 @@ function render(){
   var page = parts[0] || '';
   var arg = decodeURIComponent(parts.slice(1).join('/') || '');
   var app = document.getElementById('app');
-  document.querySelectorAll('#tabs a').forEach(function(a){
+  document.querySelectorAll('#tabs a, #mnav a').forEach(function(a){
     var r = a.getAttribute('data-route');
     var on = r === page ||
       ((page === '' || page === 'ip') && r === '') ||
       ((page === 'network' || page === 'ping' || page === 'whois') && r === 'network');
     a.classList.toggle('active', on);
   });
+  var titles = { '': '概览 - IP 网络工具箱', 'ai': 'AI 检测 - IP 网络工具箱', 'status': '服务状态 - IP 网络工具箱', 'network': '网络检测 - IP 网络工具箱', 'browser': '浏览器检测 - IP 网络工具箱', 'ping': '全球 Ping - IP 网络工具箱', 'whois': 'WHOIS 查询 - IP 网络工具箱', 'ip': 'IP / 域名详情 - IP 网络工具箱' };
+  document.title = titles[page] || 'IP 网络工具箱';
   if (page === '') return viewOverview(app, token);
   if (page === 'ai') return viewAI(app, token);
   if (page === 'status') return viewStatus(app, token);
@@ -2571,88 +2668,419 @@ function render(){
 window.addEventListener('hashchange', render);
 
 /* ---------- 概览 ---------- */
-function viewOverview(app, token){
-  app.innerHTML =
-    '<h1>概览</h1>' +
-    '<div class="card"><div class="row"><input id="lookupInput" placeholder="输入 IP 或域名查询，例如 8.8.8.8 / example.com"><button class="btn" id="lookupBtn">查询</button></div>' +
-    '<p class="muted">查任意 IP 或域名：归属地、ASN、网络拓扑与注册信息。</p></div>' +
-    '<div id="meBox"><div class="skel">正在获取当前 IP…</div></div>' +
-    '<div id="quickBox"></div>';
-  var input = document.getElementById('lookupInput');
-  function go(){
-    var v = input.value.trim();
-    if (!v) return;
-    location.hash = '#/ip/' + encodeURIComponent(v);
+
+/* ---------- 旧版首页所需数据与工具 ---------- */
+var HOME_SITES = [
+  { name: '字节跳动', host: 'www.bytedance.com', url: 'https://perfops.byte-test.com/500b-bench.jpg' },
+  { name: '淘宝', host: 'www.taobao.com', url: 'https://www.taobao.com/favicon.ico' },
+  { name: '微信', host: 'weixin.qq.com', url: 'https://res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico' },
+  { name: 'GitHub', host: 'github.com', url: 'https://github.com/generate_204' },
+  { name: 'Cloudflare', host: 'www.cloudflare.com', url: 'https://1.1.1.1/cdn-cgi/trace' },
+  { name: 'YouTube', host: 'www.youtube.com', url: 'https://www.youtube.com/generate_204' }
+];
+/* 分流出口探测：[名称, 方法, 域名或地址]，与旧版 sites.json 一致（50 站） */
+var EGRESS_SITES = [
+  ['Telegram', 'unsupported', 'web.telegram.org'],
+  ['IP.cn', 'ip-text', 'https://my.ip.cn/'],
+  ['IP.SB', 'ip-json', 'https://api.ip.sb/jsonip'],
+  ['网易', 'netease', ''],
+  ['字节跳动', 'bytedance', 'https://perfops.byte-test.com/500b-bench.jpg'],
+  ['Cloudflare中国', 'cftrace', 'www.cloudflare-cn.com'],
+  ['高通中国', 'cftrace', 'www.qualcomm.cn'],
+  ['discord.com', 'cftrace', 'gateway.discord.gg'],
+  ['x.com', 'cftrace', 'x.com'],
+  ['medium.com', 'cftrace', 'medium.com'],
+  ['anthropic.com', 'cftrace', 'anthropic.com'],
+  ['claude.ai', 'cftrace', 'claude.ai'],
+  ['chatgpt.com', 'cftrace', 'chatgpt.com'],
+  ['openai.com', 'cftrace', 'openai.com'],
+  ['sora.com', 'cftrace', 'sora.com'],
+  ['grok.com', 'cftrace', 'grok.com'],
+  ['pixpix.com', 'cftrace', 'pixpix.com'],
+  ['perplexity.ai', 'cftrace', 'www.perplexity.ai'],
+  ['midjourney.com', 'cftrace', 'midjourney.com'],
+  ['coinbase.com', 'cftrace', 'coinbase.com'],
+  ['www.okx.com', 'cftrace', 'www.okx.com'],
+  ['binance.com', 'cftrace', 'www.binance.com'],
+  ['crypto.com', 'cftrace', 'crypto.com'],
+  ['zoom.us', 'cftrace', 'zoom.us'],
+  ['1password.com', 'cftrace', '1password.com'],
+  ['wise.com', 'cftrace', 'wise.com'],
+  ['notion.so', 'cftrace', 'notion.so'],
+  ['shopify.com', 'cftrace', 'shopify.com'],
+  ['godaddy.com', 'cftrace', 'godaddy.com'],
+  ['producthunt.com', 'cftrace', 'producthunt.com'],
+  ['cloudflare.com', 'cftrace', 'www.cloudflare.com'],
+  ['cloudflare cdnjs', 'cftrace', 'cdnjs.cloudflare.com'],
+  ['npm registry', 'cftrace', 'registry.npmjs.org'],
+  ['kali.download', 'cftrace', 'kali.download'],
+  ['unpkg.com', 'cftrace', 'unpkg.com'],
+  ['nodejs.org', 'cftrace', 'nodejs.org'],
+  ['gitlab.com', 'cftrace', 'gitlab.com'],
+  ['crunchyroll.com', 'cftrace', 'crunchyroll.com'],
+  ['kraken.com', 'cftrace', 'www.kraken.com'],
+  ['bybit.com', 'cftrace', 'www.bybit.com'],
+  ['bitget.com', 'cftrace', 'www.bitget.com'],
+  ['kucoin.com', 'cftrace', 'www.kucoin.com'],
+  ['amazon.com', 'cftrace', 'www.amazon.com'],
+  ['ebay.com', 'cftrace', 'www.ebay.com'],
+  ['aliexpress.com', 'cftrace', 'www.aliexpress.com'],
+  ['temu.com', 'cftrace', 'www.temu.com'],
+  ['shein.com', 'cftrace', 'www.shein.com'],
+  ['etsy.com', 'cftrace', 'www.etsy.com'],
+  ['shopee.com', 'cftrace', 'www.shopee.com'],
+  ['lazada.com', 'cftrace', 'www.lazada.com']
+];
+var HOME_SERVICES = ['9', '4', '10', '5', '0', '19', '15', '1'];
+var HOME_STATUS_LABELS = { none: '正常运行', minor: '轻微故障', major: '严重故障', critical: '重大故障', maintenance: '维护中', unknown: '未知' };
+function flagImg(code){
+  if (!code || !/^[a-z]{2}$/i.test(code)) return '';
+  return '<img class="flag" src="https://flagcdn.com/w40/' + code.toLowerCase() + '.png" alt="" loading="lazy" referrerpolicy="no-referrer">';
+}
+function scoreColor(score){
+  if (score >= 80) return 'var(--green)';
+  if (score >= 60) return '#d97706';
+  return 'var(--red)';
+}
+function dotsHtml(ms, ok){
+  var html = '<span class="dots">';
+  var i, cls;
+  for (i = 0; i < 8; i++) {
+    if (!ok) cls = '';
+    else if (ms < 150) cls = 'g';
+    else if (ms < 400) cls = (i < 6) ? 'g' : 'y';
+    else if (ms < 800) cls = (i < 3) ? 'g' : 'y';
+    else cls = (i < 2) ? 'y' : 'r';
+    html += '<i class="' + cls + '"></i>';
   }
-  document.getElementById('lookupBtn').addEventListener('click', go);
-  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  return html + '</span>';
+}
+function probeUrl(url){
+  return imgProbe(url, 8000).then(function(r){
+    if (r.ok) return r;
+    return fetchProbe(url, 8000).then(function(r2){
+      if (r2.ok) return r2;
+      return imgProbe(url, 8000);
+    });
+  });
+}
+function probeRoundsUrl(url, rounds){
+  var jobs = [];
+  for (var i = 0; i < rounds; i++) jobs.push(probeUrl(url));
+  return Promise.all(jobs).then(function(results){
+    var oks = results.filter(function(r){ return r.ok; }).map(function(r){ return r.ms; }).sort(function(a, b){ return a - b; });
+    if (!oks.length) return { ok: false, ms: -1, success: 0, total: rounds };
+    return { ok: true, ms: oks[Math.floor(oks.length / 2)], success: oks.length, total: rounds };
+  });
+}
+function isV4(ip){
+  var parts = String(ip || '').split('.');
+  if (parts.length !== 4) return false;
+  for (var i = 0; i < 4; i++) {
+    var p = parts[i];
+    if (!p || p.length > 3) return false;
+    for (var j = 0; j < p.length; j++) {
+      if (p.charAt(j) < '0' || p.charAt(j) > '9') return false;
+    }
+    if (Number(p) > 255) return false;
+  }
+  return true;
+}
+function getDomesticIp(){
+  var sources = [
+    { url: 'https://necaptcha.nosdn.127.net/ab7f4275c1744aa28e0a8f3a1c58c532.png', header: 'cdn-user-ip' },
+    { url: 'https://perfops.byte-test.com/500b-bench.jpg', header: 'x-request-ip' }
+  ];
+  var chain = Promise.reject(new Error('国内出口未知'));
+  sources.forEach(function(source){
+    chain = chain.catch(function(){
+      var ctrl = new AbortController();
+      var timer = setTimeout(function(){ ctrl.abort(); }, 3000);
+      return fetch(source.url, { method: 'HEAD', mode: 'cors', credentials: 'omit', redirect: 'error', cache: 'no-store', signal: ctrl.signal }).then(function(res){
+        clearTimeout(timer);
+        var ip = (res.headers.get(source.header) || '').trim();
+        if (!ip || !isV4(ip)) throw new Error('未获取到国内出口 IP');
+        return { ip: ip };
+      }).catch(function(e){
+        clearTimeout(timer);
+        throw e;
+      });
+    });
+  });
+  return chain;
+}
+function detectEgressSite(site){
+  var method = site[1];
+  var value = site[2];
+  var timeout = 5000;
+  if (method === 'unsupported') return Promise.resolve(null);
+  if (method === 'cftrace') {
+    return fetch('https://' + value + '/cdn-cgi/trace', { mode: 'cors', cache: 'no-store', signal: AbortSignal.timeout(timeout) }).then(function(res){
+      return res.text();
+    }).then(function(text){
+      var m = text.match(/^ip=(.+)$/m);
+      if (!m) throw new Error('未读到出口 IP');
+      return { ip: m[1].trim() };
+    });
+  }
+  if (method === 'ip-json') {
+    return fetch(value, { cache: 'no-store', signal: AbortSignal.timeout(timeout) }).then(function(res){ return res.json(); }).then(function(d){
+      if (!d.ip) throw new Error('未读到出口 IP');
+      return { ip: d.ip };
+    });
+  }
+  if (method === 'ip-text') {
+    return fetch(value, { cache: 'no-store', signal: AbortSignal.timeout(timeout) }).then(function(res){ return res.text(); }).then(function(text){
+      var m = text.match(/((?:\\d{1,3}\\.){3}\\d{1,3})/);
+      if (!m) throw new Error('未读到出口 IP');
+      return { ip: m[1] };
+    });
+  }
+  if (method === 'netease' || method === 'bytedance') {
+    var source = method === 'netease'
+      ? { url: 'https://necaptcha.nosdn.127.net/ab7f4275c1744aa28e0a8f3a1c58c532.png', header: 'cdn-user-ip' }
+      : { url: 'https://perfops.byte-test.com/500b-bench.jpg', header: 'x-request-ip' };
+    return fetch(source.url, { method: 'HEAD', mode: 'cors', credentials: 'omit', redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(timeout) }).then(function(res){
+      var ip = (res.headers.get(source.header) || '').trim();
+      if (!ip) throw new Error('未读到出口 IP');
+      return { ip: ip };
+    });
+  }
+  return Promise.resolve(null);
+}
+function renderIpCard(el, label, me, health, type, score){
+  var badges = '';
+  var seen = {};
+  function addBadge(text, cls){
+    if (seen[text]) return;
+    seen[text] = true;
+    badges += '<span class="badge ' + cls + '">' + esc(text) + '</span>';
+  }
+  if (health) {
+    if (health.isHosting) addBadge('机房 IP', 'b-blue');
+    if (health.isProxy) addBadge('代理', 'b-blue');
+    if (health.isVpn) addBadge('VPN', 'b-blue');
+    if (health.isTor) addBadge('Tor 出口', 'b-red');
+  }
+  if (type && type.available) {
+    if (type.hosting) addBadge('机房 IP', 'b-blue');
+    if (type.mobile) addBadge('移动网络', 'b-blue');
+    if (type.proxy) addBadge('代理', 'b-blue');
+  }
+  var scoreHtml = '';
+  if (typeof score === 'number' && isFinite(score)) {
+    scoreHtml = '<div class="ip-score"><div class="score-num" style="color:' + scoreColor(score) + '">' + score + '</div><div class="score-label">IP 信誉分</div></div>';
+  }
+  var place = [me.country, me.region, me.city].filter(Boolean).join(' · ');
+  var line2 = [me.isp, me.asn ? 'AS' + me.asn : ''].filter(Boolean).join(' · ');
+  el.innerHTML =
+    '<div class="eyebrow"><span>' + esc(label) + '</span>' + badges + '</div>' +
+    '<div class="ip-card-top"><div class="ip-main">' +
+    '<div class="bigip">' + flagImg(me.country_code) + '<a href="#/ip/' + encodeURIComponent(me.ip) + '">' + esc(me.ip) + '</a></div>' +
+    '<div class="ip-meta"><p>' + esc(place || '归属信息暂不可用') + '</p>' +
+    (line2 ? '<p class="sub">' + esc(line2) + '</p>' : '') + '</div>' +
+    '</div>' + scoreHtml + '</div>';
+}
+function loadExternalCard(token){
   Promise.allSettled([api('/me'), api('/ip/health')]).then(function(results){
     if (token !== viewToken) return;
+    var el = document.getElementById('cardExternal');
+    if (!el) return;
     var me = results[0].status === 'fulfilled' ? results[0].value : null;
     var health = results[1].status === 'fulfilled' ? results[1].value : null;
-    var box = document.getElementById('meBox');
-    if (!box) return;
     if (!me) {
-      box.innerHTML = '<div class="err">获取当前 IP 失败：' + esc(results[0].reason && results[0].reason.message ? results[0].reason.message : '请刷新重试') + '</div>';
+      el.innerHTML = '<div class="eyebrow"><span>IPv4 · 外部探测</span></div><div class="err">获取当前 IP 失败：' + esc(results[0].reason && results[0].reason.message ? results[0].reason.message : '请刷新重试') + '</div>';
       return;
     }
-    var badges = '';
-    if (health) {
-      if (health.isHosting) badges += '<span class="badge b-yellow">机房 IP</span>';
-      if (health.isProxy) badges += '<span class="badge b-yellow">代理</span>';
-      if (health.isVpn) badges += '<span class="badge b-yellow">VPN</span>';
-      if (health.isTor) badges += '<span class="badge b-red">Tor 出口</span>';
-      if (health.score != null) badges += '<span class="badge b-blue">信誉分 ' + esc(health.score) + '</span>';
-    }
-    box.innerHTML =
-      '<div class="grid">' +
-      '<div class="card"><h3>当前 IP</h3>' +
-      '<div class="bigip" id="myIp">' + esc(me.ip) + '</div>' +
-      '<div class="row" style="margin-top:10px"><button class="btn ghost" id="copyIp">复制 IP</button>' +
-      '<a class="btn ghost" href="#/ip/' + encodeURIComponent(me.ip) + '">查看详情</a></div>' +
-      '<p style="margin-top:10px">' + badges + '</p>' +
-      (health && health.score != null ? '<p class="muted">信誉分来自 Net.Coffee，仅供参考；分数含义以数据源为准。</p>' : '') +
-      '</div>' +
-      '<div class="card"><h3>归属地</h3><dl class="kv">' +
-      '<dt>国家 / 地区</dt><dd>' + esc(me.country || '未知') + (me.country_code ? '（' + esc(me.country_code) + '）' : '') + '</dd>' +
-      '<dt>地区</dt><dd>' + esc(me.region || '未知') + '</dd>' +
-      '<dt>城市</dt><dd>' + esc(me.city || '未知') + '</dd>' +
-      '<dt>运营商</dt><dd>' + esc(me.isp || '未知') + '</dd>' +
-      '<dt>ASN</dt><dd>' + (me.asn ? 'AS' + esc(me.asn) : '未知') + '</dd>' +
-      '<dt>经纬度</dt><dd>' + (me.latitude != null ? esc(me.latitude) + ', ' + esc(me.longitude) : '未知') + '</dd>' +
-      '<dt>时区</dt><dd>' + esc(me.timezone || '未知') + '</dd>' +
-      '</dl></div>' +
-      '</div>';
-    document.getElementById('copyIp').addEventListener('click', function(){
-      if (navigator.clipboard) navigator.clipboard.writeText(me.ip);
-      this.textContent = '已复制';
-      var self = this;
-      setTimeout(function(){ self.textContent = '复制 IP'; }, 1500);
-    });
+    var score = health && health.score != null ? health.score : null;
+    renderIpCard(el, 'IPv4 · 外部探测', me, health, null, score);
     api('/ip-type/' + encodeURIComponent(me.ip)).then(function(t){
-      if (token !== viewToken) return;
-      var el = document.getElementById('myIp');
-      if (!el || !t.available) return;
-      var extra = '';
-      if (t.hosting) extra += '<span class="badge b-yellow">机房</span>';
-      if (t.mobile) extra += '<span class="badge b-blue">移动网络</span>';
-      if (t.proxy) extra += '<span class="badge b-yellow">代理</span>';
-      if (extra) el.insertAdjacentHTML('afterend', '<p style="margin-top:8px">' + extra + '</p>');
+      if (token !== viewToken || !t.available) return;
+      renderIpCard(el, 'IPv4 · 外部探测', me, health, t, score);
     }).catch(function(){});
   });
-  var quickHosts = ['github.com', 'www.google.com', 'www.cloudflare.com', 'www.youtube.com', 'www.taobao.com', 'www.baidu.com'];
-  runLimited(quickHosts, 6, function(host){ return probeSite(host).then(function(r){ return { host: host, r: r }; }); }).then(function(results){
+}
+function loadDomesticCard(token){
+  var el = document.getElementById('cardDomestic');
+  if (!el) return;
+  getDomesticIp().then(function(d){
     if (token !== viewToken) return;
-    var box = document.getElementById('quickBox');
-    if (!box) return;
-    var html = '<div class="card"><h3>常用站点连通（快速探测）</h3><p>';
-    results.forEach(function(item){
-      var r = item.r;
-      html += '<span class="badge ' + (r.ok ? 'b-green' : 'b-gray') + '">' + esc(item.host) + ' ' + (r.ok ? r.ms + ' ms' : '未连通') + '</span>';
+    function done(geo){
+      renderIpCard(el, 'IPv4 · 国内探测', geo, null, null, null);
+      api('/ip-type/' + encodeURIComponent(d.ip)).then(function(t){
+        if (token !== viewToken || !t.available) return;
+        renderIpCard(el, 'IPv4 · 国内探测', geo, null, t, null);
+      }).catch(function(){});
+    }
+    api('/geoip/' + encodeURIComponent(d.ip)).then(function(geo){
+      if (token !== viewToken) return;
+      done(geo);
+    }).catch(function(){
+      api('/ip/lookup/' + encodeURIComponent(d.ip)).then(function(data){
+        if (token !== viewToken) return;
+        done(data.geo || { ip: d.ip });
+      }).catch(function(){
+        if (token !== viewToken) return;
+        done({ ip: d.ip });
+      });
     });
-    html += '</p><p class="muted">浏览器端探测：图标加载 + no-cors 请求双信号判定，耗时为浏览器请求耗时，不是 ICMP 延迟。<a href="#/network/connectivity">查看完整连通性 →</a></p></div>';
+  }).catch(function(){
+    if (token !== viewToken) return;
+    el.innerHTML = '<div class="eyebrow"><span>IPv4 · 国内探测</span></div><div class="err">国内出口未知：目标站点可能限制跨域读取。</div>';
+  });
+}
+function loadHomeConnectivity(token){
+  runLimited(HOME_SITES, 6, function(site){
+    return probeRoundsUrl(site.url, 3).then(function(r){ return { site: site, r: r }; });
+  }).then(function(results){
+    if (token !== viewToken) return;
+    var box = document.getElementById('connTiles');
+    if (!box) return;
+    results.sort(function(a, b){
+      var l = a.r.ok ? a.r.ms : Infinity;
+      var r = b.r.ok ? b.r.ms : Infinity;
+      return l - r;
+    });
+    var html = '';
+    results.forEach(function(item){
+      html += '<div class="tile"><div class="tile-top"><span class="tile-name">' + iconImg(item.site.host) + '<span>' + esc(item.site.name) + '</span></span>' +
+        '<span class="ms ' + msClass(item.r.ok ? item.r.ms : -1) + '">' + msText(item.r.ok ? item.r.ms : -1) + '</span></div>' +
+        dotsHtml(item.r.ok ? item.r.ms : -1, item.r.ok) + '</div>';
+    });
     box.innerHTML = html;
   });
+}
+function loadEgress(token){
+  var box = document.getElementById('egressBox');
+  var foot = document.getElementById('egressFoot');
+  if (!box) return;
+  runLimited(EGRESS_SITES, 6, function(site){
+    return detectEgressSite(site).then(function(r){ return { site: site, r: r }; }).catch(function(){ return { site: site, r: null }; });
+  }).then(function(items){
+    if (token !== viewToken) return;
+    var byIp = {};
+    var okCount = 0;
+    items.forEach(function(item){
+      if (item.r && item.r.ip) {
+        okCount++;
+        if (!byIp[item.r.ip]) byIp[item.r.ip] = { ip: item.r.ip, count: 0 };
+        byIp[item.r.ip].count++;
+      }
+    });
+    var groups = Object.keys(byIp).map(function(ip){ return byIp[ip]; }).sort(function(a, b){ return b.count - a.count; });
+    if (!groups.length) {
+      box.innerHTML = '<p class="muted">本次未能读取到各站点的出口 IP（可能被浏览器或网络拦截），可直接打开“查看全部”逐站检测。</p>';
+      if (foot) foot.textContent = '已读取 0 / ' + EGRESS_SITES.length + ' 个站点的出口';
+      return;
+    }
+    var ips = groups.slice(0, 4).map(function(g){ return g.ip; });
+    Promise.allSettled(ips.map(function(ip){ return api('/geoip/' + encodeURIComponent(ip)); })).then(function(geoResults){
+      if (token !== viewToken) return;
+      var html = '';
+      groups.slice(0, 4).forEach(function(g, i){
+        var geo = geoResults[i].status === 'fulfilled' ? geoResults[i].value : null;
+        html += '<div class="egress-row">' + flagImg(geo && geo.country_code) + '<span class="bigip" style="font-size:19px">' + esc(g.ip) + '</span><span class="muted" style="margin-left:auto">' + g.count + '个站点</span></div>';
+      });
+      box.innerHTML = html;
+      if (foot) foot.textContent = '已读取 ' + okCount + ' / ' + EGRESS_SITES.length + ' 个站点的出口';
+    });
+  });
+}
+function loadHomeAI(token){
+  runLimited(AI_SITES, 8, function(site){
+    return probeSite(site.host).then(function(r){ return { site: site, r: r }; });
+  }).then(function(results){
+    if (token !== viewToken) return;
+    var box = document.getElementById('aiBox');
+    if (!box) return;
+    results.sort(function(a, b){
+      var l = a.r.ok ? a.r.ms : Infinity;
+      var r = b.r.ok ? b.r.ms : Infinity;
+      return l - r;
+    });
+    var html = '';
+    results.forEach(function(item){
+      html += '<div class="ai-row"><a class="nm" href="#/ai">' + iconImg(item.site.host) + '<span>' + esc(item.site.name) + '</span></a>' +
+        (item.r.ok ? '<span class="ms-orange">' + item.r.ms + ' ms</span>' : '<span class="muted">不可达</span>') + '</div>';
+    });
+    box.innerHTML = html;
+  });
+}
+function loadHomeStatus(token){
+  runLimited(HOME_SERVICES, 4, function(id){
+    var svc = null;
+    SERVICES.forEach(function(s){ if (s[0] === id) svc = s; });
+    return api('/status/' + encodeURIComponent(id), { timeout: 15000 }).then(function(d){
+      return { svc: svc, d: d };
+    }).catch(function(){ return { svc: svc, d: null }; });
+  }).then(function(results){
+    if (token !== viewToken) return;
+    var box = document.getElementById('svcBox');
+    if (!box) return;
+    var html = '';
+    results.forEach(function(item){
+      if (!item.svc) return;
+      var host = '';
+      try { host = new URL(item.svc[3]).host; } catch (e) { host = ''; }
+      var ind = (item.d && item.d.status && item.d.status.indicator) || 'unknown';
+      var label = HOME_STATUS_LABELS[ind] || '未知';
+      var cls = ind === 'none' ? 'st-ok' : (ind === 'maintenance' ? 'st-warn' : (ind === 'unknown' ? 'st-unk' : 'st-bad'));
+      html += '<div class="svc-row"><a class="nm" href="#/status">' + iconImg(host) + '<span>' + esc(item.svc[1]) + '</span></a><span class="' + cls + '">' + esc(label) + '</span></div>';
+    });
+    box.innerHTML = html;
+  });
+}
+function loadHomeBrowser(token){
+  var box = document.getElementById('browserBox');
+  if (!box) return;
+  var ua = navigator.userAgent || '';
+  var line = (navigator.platform || '') + ' · ' + (navigator.language || '') + ' · ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+  box.innerHTML =
+    '<p class="small muted" style="word-break:break-all">' + esc(line) + '</p>' +
+    '<p class="small muted" style="word-break:break-all">' + esc(ua) + '</p>' +
+    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span class="muted" style="flex:1">浏览器指纹 · Visitor ID</span><span class="ms" id="homeVisitorId">检测中…</span></div>' +
+    '<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:16px"><a href="#/browser">指纹检测 ›</a><a href="#/browser">环境一致性 ›</a><a href="#/browser">权限与隐私 ›</a></div>';
+  sha256Hex(ua + '|' + screen.width + 'x' + screen.height + '|' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '') + '|' + (navigator.language || '')).then(function(h){
+    var el = document.getElementById('homeVisitorId');
+    if (el && h) el.textContent = h.slice(0, 16);
+  });
+}
+function shortcutLink(href, iconHtml, label, desc){
+  return '<a href="' + href + '"><span class="shortcut-icon">' + iconHtml + '</span><span class="shortcut-label"><strong>' + esc(label) + '</strong><span class="shortcut-description">' + esc(desc) + '</span></span><span class="shortcut-arrow">→</span></a>';
+}
+
+function viewOverview(app, token){
+  app.innerHTML =
+    '<div class="page-head"><h1>网络概览</h1><button class="btn ghost" id="refreshBtn">重新检测</button></div>' +
+    '<div class="ip-grid">' +
+      '<div class="card" id="cardDomestic"><div class="skel">正在探测国内出口…</div></div>' +
+      '<div class="card" id="cardExternal"><div class="skel">正在获取当前 IP…</div></div>' +
+    '</div>' +
+    '<div class="card"><div class="row-between"><h3>网络连通性</h3><a class="small muted" href="#/network/connectivity">查看更多 ›</a></div><div class="ping-grid" id="connTiles"><div class="skel">正在探测…</div></div></div>' +
+    '<div class="card"><div class="row-between"><h3>网站分流出口</h3><a class="small muted" href="#/network/exits">查看全部 ›</a></div><div id="egressBox"><div class="skel">正在探测出口…</div></div><div class="muted small" id="egressFoot" style="margin-top:8px"></div></div>' +
+    '<div class="duo-grid">' +
+      '<div class="card"><h3>AI 访问概览</h3><div id="aiBox"><div class="skel">正在探测…</div></div><p class="muted small">显示 HTTP 响应耗时；不可达表示本次探测失败。点击平台查看详情及官网。</p></div>' +
+      '<div class="card"><div class="row-between"><h3>服务状态</h3><a class="small muted" href="#/status">全部服务 ›</a></div><div id="svcBox"><div class="skel">正在查询…</div></div><p class="muted small">来自官方状态源，点击服务查看组件与事件。</p></div>' +
+    '</div>' +
+    '<div class="card"><div class="row-between"><h3>浏览器环境</h3><a class="small muted" href="#/browser">查看完整检测 ›</a></div><div id="browserBox"><div class="skel">正在检测…</div></div></div>' +
+    '<div class="card"><h3>热门功能</h3>' +
+      '<a class="shortcut-feature" href="#/ai"><span class="shortcut-icon">' + iconImg('claude.ai') + '</span><span class="shortcut-label"><strong>Claude 中国用户检测</strong><span class="shortcut-description">检查语言、时区与设备信号，了解浏览器暴露的环境特征。</span></span><span class="shortcut-arrow">→</span></a>' +
+      '<div class="shortcut-grid">' +
+        shortcutLink('#/ai', iconImg('chatgpt.com'), 'ChatGPT 检测', '检查 AI 服务响应与访问出口') +
+        shortcutLink('#/network/exits', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3"/><path d="M15 7V3"/><path d="M7 7h10v4a5 5 0 0 1-10 0V7z"/><path d="M12 16v5"/></svg>', '分流出口', '核对不同网站的实际出口') +
+        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>', '人机检测', '体验验证码，查看验证结果') +
+        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>', '环境一致性', '核对浏览器环境与设备信号') +
+        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M14 9h4"/><path d="M14 13h4"/><path d="M6 16h12"/></svg>', '浏览器指纹', '查看指纹组成与变化') +
+        shortcutLink('#/status', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>', '服务状态', '查看平台故障与服务动态') +
+      '</div></div>';
+  document.getElementById('refreshBtn').addEventListener('click', function(){ render(); });
+  loadExternalCard(token);
+  loadDomesticCard(token);
+  loadHomeConnectivity(token);
+  loadEgress(token);
+  loadHomeAI(token);
+  loadHomeStatus(token);
+  loadHomeBrowser(token);
 }
 
 /* ---------- AI 检测 ---------- */
@@ -2682,7 +3110,7 @@ function viewAI(app, token){
 }
 
 /* ---------- 服务状态 ---------- */
-var STATUS_LABELS = { ok: '正常', degraded: '部分异常', down: '故障', maintenance: '维护中', unknown: '未知' };
+var STATUS_LABELS = { none: '正常运行', minor: '轻微故障', major: '严重故障', critical: '重大故障', maintenance: '维护中', unknown: '未知' };
 function viewStatus(app, token){
   app.innerHTML =
     '<h1>服务状态</h1>' +
@@ -2706,12 +3134,13 @@ function viewStatus(app, token){
     html += '</div>';
   });
   document.getElementById('statusList').innerHTML = html;
-  var counts = { ok: 0, degraded: 0, down: 0, maintenance: 0, unknown: 0, done: 0 };
+  var counts = { none: 0, minor: 0, major: 0, critical: 0, maintenance: 0, unknown: 0, done: 0 };
   function updateSummary(){
     document.getElementById('statusSummary').innerHTML =
-      '<div class="card"><span class="badge b-green">正常 ' + counts.ok + '</span>' +
-      '<span class="badge b-yellow">部分异常 ' + counts.degraded + '</span>' +
-      '<span class="badge b-red">故障 ' + counts.down + '</span>' +
+      '<div class="card"><span class="badge b-green">正常运行 ' + counts.none + '</span>' +
+      '<span class="badge b-red">轻微故障 ' + counts.minor + '</span>' +
+      '<span class="badge b-red">严重故障 ' + counts.major + '</span>' +
+      '<span class="badge b-red">重大故障 ' + counts.critical + '</span>' +
       '<span class="badge b-yellow">维护中 ' + counts.maintenance + '</span>' +
       '<span class="badge b-gray">未知 ' + counts.unknown + '</span>' +
       '<span class="muted">已完成 ' + counts.done + ' / ' + SERVICES.length + '</span></div>';
@@ -2739,9 +3168,9 @@ function viewStatus(app, token){
       var ind = (d.status && d.status.indicator) || 'unknown';
       counts[ind] = (counts[ind] || 0) + 1;
       counts.done++;
-      var dot = ind === 'ok' ? 'g' : (ind === 'down' ? 'r' : (ind === 'unknown' ? 'gr' : 'y'));
+      var dot = ind === 'none' ? 'g' : (ind === 'unknown' ? 'gr' : (ind === 'maintenance' ? 'y' : 'r'));
       var label = STATUS_LABELS[ind] || '未知';
-      var badge = ind === 'ok' ? 'b-green' : (ind === 'down' ? 'b-red' : (ind === 'unknown' ? 'b-gray' : 'b-yellow'));
+      var badge = ind === 'none' ? 'b-green' : (ind === 'unknown' ? 'b-gray' : (ind === 'maintenance' ? 'b-yellow' : 'b-red'));
       var desc = d.status && d.status.description ? ' — ' + esc(d.status.description) : '';
       var incidents = '';
       if (d.incidents && d.incidents.length) {
@@ -3397,6 +3826,26 @@ function viewBrowser(app, token){
     });
   });
 }
+
+
+/* ---------- 主题（浅色 / 深色） ---------- */
+var MOON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+var SUN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.9 4.9l1.4 1.4"/><path d="M17.7 17.7l1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.9 19.1l1.4-1.4"/><path d="M17.7 6.3l1.4-1.4"/></svg>';
+function applyTheme(dark){
+  document.documentElement.classList.toggle('dark', !!dark);
+  var icon = document.getElementById('themeIcon');
+  if (icon) icon.innerHTML = dark ? SUN_SVG : MOON_SVG;
+  try { localStorage.setItem('one-ip-theme', dark ? 'dark' : 'light'); } catch (e) {}
+}
+(function initTheme(){
+  var saved = null;
+  try { saved = localStorage.getItem('one-ip-theme'); } catch (e) {}
+  applyTheme(saved === 'dark');
+  var btn = document.getElementById('themeToggle');
+  if (btn) btn.addEventListener('click', function(){
+    applyTheme(!document.documentElement.classList.contains('dark'));
+  });
+})();
 
 render();
 </script>
