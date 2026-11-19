@@ -2420,6 +2420,7 @@ pre{background:#f8f9fb;border:1px solid var(--border);border-radius:10px;padding
 .feature-label{font-size:13px;line-height:1.3}
 .feature-sub{display:block;font-size:12px;color:var(--muted);margin-top:2px}
 .promo-grid{grid-template-columns:repeat(4,minmax(0,140px));justify-content:center}
+.promo-card{max-width:640px;margin-left:auto;margin-right:auto}
 .kbd-hint{margin-left:auto;font:11px/1 inherit;padding:5px 8px;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;color:var(--muted);background:var(--surface2)}
 @media (max-width:900px){.feature-grid{grid-template-columns:repeat(4,1fr)}.promo-grid{grid-template-columns:repeat(2,minmax(0,140px))}}
 
@@ -3102,7 +3103,7 @@ function viewOverview(app, token){
         featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>', '环境一致性', '#a78bfa') +
         featureTile('#/status', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>', '服务状态', '#34d399') +
       '</div></div>' +
-    '<div class="card"><h3>广告投放</h3>' +
+    '<div class="card promo-card"><h3>广告投放</h3>' +
       '<div class="feature-grid promo-grid">' +
         promoLink('https://t.me/eziyuan_1', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>', 'TG 频道', '@eziyuan_1', '#229ED9') +
         promoLink('https://blog.t20.de5.net/', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>', '自由论坛', 'blog.t20.de5.net', '#a78bfa') +
