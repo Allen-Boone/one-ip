@@ -2411,6 +2411,16 @@ pre{background:#f8f9fb;border:1px solid var(--border);border-radius:10px;padding
 .shortcut-icon svg{width:20px;height:20px}
 .shortcut-label{flex:1;min-width:0}
 .shortcut-label strong{display:block;font-size:14px}
+.feature-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:12px}
+.feature-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border:1px solid var(--border);border-radius:10px;color:var(--text);text-align:center}
+.feature-tile:hover{background:var(--surface2);text-decoration:none}
+.feature-icon{width:44px;height:44px;border-radius:11px;background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.feature-icon img{width:26px;height:26px;border-radius:6px;margin:0}
+.feature-icon svg{width:24px;height:24px}
+.feature-label{font-size:13px;line-height:1.3}
+.kbd-hint{margin-left:auto;font:11px/1 inherit;padding:5px 8px;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;color:var(--muted);background:var(--surface2)}
+@media (max-width:900px){.feature-grid{grid-template-columns:repeat(4,1fr)}}
+
 .shortcut-description{display:block;font-size:12px;color:var(--muted)}
 .shortcut-arrow{color:var(--muted);flex:none}
 @media (max-width:640px){
@@ -3049,9 +3059,16 @@ function shortcutLink(href, iconHtml, label, desc){
   return '<a href="' + href + '"><span class="shortcut-icon">' + iconHtml + '</span><span class="shortcut-label"><strong>' + esc(label) + '</strong><span class="shortcut-description">' + esc(desc) + '</span></span><span class="shortcut-arrow">→</span></a>';
 }
 
+function featureTile(href, iconHtml, label, color){
+  var style = color ? ' style="color:' + color + '"' : '';
+  return '<a class="feature-tile" href="' + href + '"><span class="feature-icon"' + style + '>' + iconHtml + '</span><span class="feature-label">' + esc(label) + '</span></a>';
+}
+
 function viewOverview(app, token){
   app.innerHTML =
     '<div class="page-head"><h1>网络概览</h1><button class="btn ghost" id="refreshBtn">重新检测</button></div>' +
+    '<div class="card"><div class="row"><input id="lookupInput" placeholder="输入 IP 或域名查询，例如 8.8.8.8 / example.com"><button class="btn" id="lookupBtn">查询</button><kbd class="kbd-hint">Ctrl K</kbd></div>' +
+    '<p class="muted">查任意 IP 或域名：归属地、ASN、网络拓扑与注册信息。</p></div>' +
     '<div class="ip-grid">' +
       '<div class="card" id="cardDomestic"><div class="skel">正在探测国内出口…</div></div>' +
       '<div class="card" id="cardExternal"><div class="skel">正在获取当前 IP…</div></div>' +
@@ -3064,16 +3081,26 @@ function viewOverview(app, token){
     '</div>' +
     '<div class="card"><div class="row-between"><h3>浏览器环境</h3><a class="small muted" href="#/browser">查看完整检测 ›</a></div><div id="browserBox"><div class="skel">正在检测…</div></div></div>' +
     '<div class="card"><h3>热门功能</h3>' +
-      '<a class="shortcut-feature" href="#/ai"><span class="shortcut-icon">' + iconImg('claude.ai') + '</span><span class="shortcut-label"><strong>Claude 中国用户检测</strong><span class="shortcut-description">检查语言、时区与设备信号，了解浏览器暴露的环境特征。</span></span><span class="shortcut-arrow">→</span></a>' +
-      '<div class="shortcut-grid">' +
-        shortcutLink('#/ai', iconImg('chatgpt.com'), 'ChatGPT 检测', '检查 AI 服务响应与访问出口') +
-        shortcutLink('#/network/exits', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3"/><path d="M15 7V3"/><path d="M7 7h10v4a5 5 0 0 1-10 0V7z"/><path d="M12 16v5"/></svg>', '分流出口', '核对不同网站的实际出口') +
-        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>', '人机检测', '体验验证码，查看验证结果') +
-        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>', '环境一致性', '核对浏览器环境与设备信号') +
-        shortcutLink('#/browser', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M14 9h4"/><path d="M14 13h4"/><path d="M6 16h12"/></svg>', '浏览器指纹', '查看指纹组成与变化') +
-        shortcutLink('#/status', '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>', '服务状态', '查看平台故障与服务动态') +
+      '<div class="feature-grid">' +
+        featureTile('#/ip/', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>', 'IP 信息查询', '#38bdf8') +
+        featureTile('#/network/dns', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></svg>', 'DNS 泄漏', '#38bdf8') +
+        featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>', 'WebRTC 泄漏', '#22d3ee') +
+        featureTile('#/ai', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>', '解锁检测', '#94a3b8') +
+        featureTile('#/ai', iconImg('chatgpt.com'), 'ChatGPT 检测') +
+        featureTile('#/ai', iconImg('claude.ai'), 'Claude 中国用户检测') +
+        featureTile('#/network/speedtest', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4-4"/><path d="M2 15h2M20 15h2"/></svg>', '网站测速', '#38bdf8') +
+        featureTile('#/whois', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>', 'WHOIS', '#a78bfa') +
+        featureTile('#/ping', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 12l4.5-4.5"/></svg>', '全球 Ping', '#34d399') +
+        featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a3 3 0 0 1 3 3c0 2 0 3-1 5"/><path d="M6.5 13a5.5 5.5 0 0 1 11 0c0 1.5-.3 3-1 4.5"/><path d="M3.5 16a8.5 8.5 0 0 1 17 0c0 2.5-.8 4.5-2 6"/></svg>', '浏览器指纹', '#34d399') +
+        featureTile('#/browser', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>', '环境一致性', '#a78bfa') +
+        featureTile('#/status', '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>', '服务状态', '#34d399') +
       '</div></div>';
   document.getElementById('refreshBtn').addEventListener('click', function(){ render(); });
+  var lookupInput = document.getElementById('lookupInput');
+  function lookupGo(){ var v = lookupInput.value.trim(); if (!v) return; location.hash = '#/ip/' + encodeURIComponent(v); }
+  document.getElementById('lookupBtn').addEventListener('click', lookupGo);
+  lookupInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') lookupGo(); });
+  if (!window.__oneIpKbd) { window.__oneIpKbd = true; document.addEventListener('keydown', function(e){ if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { var el = document.getElementById('lookupInput'); if (el) { e.preventDefault(); el.focus(); el.select(); } } }); }
   loadExternalCard(token);
   loadDomesticCard(token);
   loadHomeConnectivity(token);
