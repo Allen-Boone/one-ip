@@ -2370,7 +2370,7 @@ function $(s){ return document.querySelector(s); }
 function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function msClass(ms){ if (ms == null || ms < 0) return 'bad'; if (ms < 150) return 'good'; if (ms < 400) return 'mid'; return 'slow'; }
 function msText(ms){ if (ms == null || ms < 0) return '未连通'; return ms + ' ms'; }
-function iconImg(host){ return '<img class="icon" loading="lazy" src="/api/icons/' + encodeURIComponent(host) + '" onerror="this.style.visibility=\'hidden\'" alt="">'; }
+function iconImg(host){ return '<img class="icon" loading="lazy" src="/api/icons/' + encodeURIComponent(host) + '" onerror="this.style.visibility=\\'hidden\\'" alt="">'; }
 function api(path, opts){
   opts = opts || {};
   var ctrl = new AbortController();
@@ -2540,7 +2540,7 @@ var SERVICES = [
 var viewToken = 0;
 function render(){
   var token = ++viewToken;
-  var hash = location.hash.replace(/^#\/?/, '');
+  var hash = location.hash.replace(/^#\\/?/, '');
   var parts = hash.split('/');
   var page = parts[0] || '';
   var arg = decodeURIComponent(parts.slice(1).join('/') || '');
@@ -3192,7 +3192,7 @@ function viewWhois(app, token){
 
 /* ---------- IP 详情 ---------- */
 function isIpLike(v){
-  return /^(\d{1,3}\.){3}\d{1,3}$/.test(v) || /^[0-9a-fA-F:]+$/.test(v) && v.indexOf(':') >= 0;
+  return /^(\\d{1,3}\\.){3}\\d{1,3}$/.test(v) || /^[0-9a-fA-F:]+$/.test(v) && v.indexOf(':') >= 0;
 }
 function viewIpDetail(app, token, arg){
   app.innerHTML =
@@ -3304,7 +3304,7 @@ function gatherWebrtc(){
       pc.createDataChannel('probe');
       pc.onicecandidate = function(e){
         if (e.candidate) {
-          var m = e.candidate.candidate.match(/([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+|[0-9a-fA-F:]{2,})/);
+          var m = e.candidate.candidate.match(/([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+|[0-9a-fA-F:]{2,})/);
           if (m) ips[m[1]] = true;
         }
       };
